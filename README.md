@@ -16,3 +16,5 @@ You will also see any lint errors in the console.
 
 ## Uses PokeAPI
 Displays the result using PokeAPI, axios and fetchAPI
+Read the documentation for using PokeAPI : [here](https://pokeapi.co/docs/v2)
+
