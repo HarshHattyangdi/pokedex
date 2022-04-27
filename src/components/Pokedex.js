@@ -1,36 +1,33 @@
-import { useState } from "react";
+import { useState,useRef,useEffect } from "react";
 import axios from "axios";
 
 import Pokemon from "./Pokemon";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 function Pokedex() {
-  const [state, setstate] = useState();
-  const [pokemon, setPokemon] = useState(null);
+  const inputField = useRef(null);
 
-  const getPokemon = async (e) => {
-    try {
-      e.preventDefault();
-      const res = await axios.get(`${BASE_URL}/${state}`);
-      const poke = res.data;
-      setPokemon(poke);
-    } catch (error) {
-      console.error(error);
-    }
+  const [pokemon, setPokemon] = useState(null);
+  
+  
+  const getPokemon = () => {
+    console.log(inputField.current.value);
+    const URL = `${BASE_URL}/${inputField.current.value}`;
+    return fetch(URL)
+    .then(res=>res.json())
+    .then(results => setPokemon(results));
   };
 
   return (
     <div>
-      <form onSubmit={(e) => getPokemon(e)}>
+      <div >
         <input
           type="text"
           placeholder="Enter Pokemon No."
-          onChange={(e) => {
-            setstate(e.target.value.toLowerCase());
-          }}
+          ref={inputField}
         />
-        <input type="submit" value="Get Pokemon!!" />
-      </form>
+        <input type="button" value="Get Pokemon!!" onClick={ getPokemon}/>
+      </div>
       {pokemon && <Pokemon pokemon={pokemon} />}
     </div>
   );
